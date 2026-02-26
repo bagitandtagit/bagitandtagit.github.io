@@ -1,0 +1,658 @@
+/* Color Palette & Base Styles */
+:root {
+    --black: #111111;
+    --charcoal: #2C2C2C;
+    --olive: #5B6D43;
+    --olive-light: #6A7E51;
+    --white: #F9F9F9;
+}
+
+/* Custom Text Highlight */
+::selection {
+    background-color: var(--olive);
+    color: white;
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: var(--black); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--olive); 
+    border-radius: 6px;
+    border: 3px solid var(--black); /* Gives it a sleek padded look */
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--olive-light); 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    color: var(--black);
+    background-color: var(--white);
+    /* Prevents weird horizontal scrolling when animations happen */
+    overflow-x: hidden; 
+}
+
+/* Dynamic Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    /* Starts completely transparent! */
+    background-color: transparent; 
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    /* Smooth transition when the JS adds the solid color */
+    transition: background-color 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease;
+}
+
+/* This class gets added by JS when you scroll */
+nav.scrolled {
+    background-color: var(--black);
+    padding: 0.5rem 5%;
+    border-bottom: 3px solid var(--olive);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.nav-img {
+    height: 45px;
+    display: block;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Helps text pop on the photo */
+}
+
+/* Removes text shadow on nav links once scrolled */
+nav.scrolled .nav-links a {
+    text-shadow: none;
+}
+
+.btn-nav {
+    background-color: var(--olive);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+    text-shadow: none !important;
+}
+
+.btn-nav:hover {
+    background-color: var(--olive-light);
+}
+
+/* Hero Section (PARALLAX EFFECT ADDED) */
+.hero {
+    position: relative;
+    background-image: url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    /* THE PARALLAX SECRET: This freezes the image in place while you scroll */
+    background-attachment: fixed; 
+    color: white;
+    padding: 10rem 5% 6rem 5%; /* Extra top padding to clear the nav bar */
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(17, 17, 17, 0.75);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-logo {
+    width: 180px; /* Adjusts the size of the stamp */
+    height: auto; /* Keeps the proportions perfect */
+    align-self: center; /* Keeps it dead center on screen */
+    margin-bottom: 1.5rem;
+    /* This creates a shadow that actually follows the shape of your drawing instead of a boring square box! */
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 0 auto 2rem auto;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.btn {
+    background-color: var(--olive);
+    color: white;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: var(--olive-light);
+}
+
+/* Sections General */
+section {
+    padding: 6rem 5%;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+    text-transform: uppercase;
+}
+
+/* Services (3D LIFT EFFECT ADDED) */
+.service-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--olive);
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    /* Prepares the card to animate smoothly */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card.reveal.active:hover {
+    /* The added classes force this 3D lift to override the scroll animation */
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+
+}
+
+.card h3 {
+    margin-bottom: 1rem;
+    color: var(--charcoal);
+    font-size: 1.4rem;
+}
+
+/* Experience & Gallery */
+.experience {
+    background-color: #E8EBE4;
+}
+
+.event-list {
+    list-style: none;
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--charcoal);
+}
+
+.event-list li {
+    margin-bottom: 0.5rem;
+}
+
+.gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 3px solid var(--charcoal);
+}
+
+/* Contact Form */
+form {
+    max-width: 600px;
+    margin: 2rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+form input {
+    padding: 1.2rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    background-color: white;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--olive);
+}
+
+/* Footer */
+footer {
+    background-color: var(--black);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    border-top: 3px solid var(--olive);
+}
+
+/* =========================================
+   THE FADE & SLIDE ANIMATION CLASSES
+   ========================================= */
+.reveal {
+    /* Starts invisible and pushed down 50 pixels */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    /* When JS adds 'active', it fades in and slides to normal position */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   THE TYPING EFFECT & STATS COUNTER
+   ========================================= */
+
+/* Typing Cursor */
+.typing-text {
+    color: var(--olive-light);
+    font-weight: bold;
+}
+.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color: white;
+    margin-left: 5px;
+    animation: blink 0.8s infinite;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Stats Section */
+.stats-section {
+    background-color: var(--black);
+    color: white;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    padding: 4rem 5%;
+    border-top: 3px solid var(--olive);
+    border-bottom: 3px solid var(--olive);
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-box h3 {
+    font-size: 3.5rem;
+    color: var(--olive);
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.stat-box p {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* =========================================
+   LINKS & TRIBUTE SECTION
+   ========================================= */
+
+/* Experience Typing Color */
+.typing-experience {
+    color: var(--black);
+}
+
+/* Hyperlinked Event List */
+.event-list li a {
+    color: var(--olive);
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    display: inline-block;
+}
+
+.event-list li a:hover {
+    color: var(--black);
+    padding-left: 10px; /* Cool sliding effect when you hover over the link */
+}
+
+/* Believe in Brighton Tribute Box */
+.tribute-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 5rem;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    border-left: 6px solid var(--olive);
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tribute-logo {
+    width: 130px;
+    height: auto;
+    object-fit: contain;
+}
+
+.tribute-text h3 {
+    color: var(--olive);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+/* Makes it stack neatly on mobile phones */
+@media (max-width: 600px) {
+    .tribute-section {
+        flex-direction: column;
+        text-align: center;
+        border-left: none;
+        border-top: 6px solid var(--olive);
+    }
+}
+
+/* =========================================
+   FAQ ACCORDION & TOP BUTTON
+   ========================================= */
+
+/* FAQ Styles */
+.faq-container {
+    max-width: 800px;
+    margin: 2rem auto 0 auto;
+    text-align: left;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--charcoal);
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover, .faq-question.active {
+    color: var(--olive);
+}
+
+.faq-question .icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-question.active .icon {
+    transform: rotate(45deg); /* Turns the + into an x */
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.faq-answer p {
+    padding-bottom: 1.5rem;
+    color: #555;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--olive);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 999;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--black);
+    transform: translateY(-5px); /* Little hover hop */
+}
+
+/* =========================================
+   MOBILE NAVIGATION (HAMBURGER MENU)
+   ========================================= */
+
+/* The hamburger lines (hidden on desktop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
+    z-index: 1000;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+/* When the screen is smaller than 768px (tablets and phones) */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Hide the normal links and format them as a dropdown */
+    .nav-links {
+        position: absolute;
+        top: 100%; /* Puts it right below the nav bar */
+        left: 0;
+        width: 100%;
+        background-color: var(--black);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 2rem;
+        border-bottom: 3px solid var(--olive);
+        box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+        
+        /* The slide-down animation settings */
+        transform: translateY(-150%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 99;
+    }
+
+    /* This class gets added by JS to make it slide down */
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Animates the 3 hamburger lines into an "X" when clicked */
+    .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    .menu-toggle.is-active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.is-active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+
+/* Fix for disappearing Parallax background on mobile phones */
+@media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll; /* Turns off the freeze effect so the photo actually shows up! */
+        background-position: center;
+    }
+    
+    /* Optional: Makes the hero section a bit shorter on mobile so they see the text faster */
+    .hero {
+        padding: 8rem 5% 4rem 5%;
+    }
+
+    /* This is the typing text "Overflowing Bins.", "Flaky Volunteers.",  "Event Trash." */
+    /* Stops the typing text from bouncing the page up and down */
+    /* The upgraded fix for centering the typing text */
+    .hero-content h1 {
+        min-height: 310px; /*Keeps the box stable so it doesn't bounce */
+        
+        .hero-content h1 {
+        display: block; /* This is the magic that fixes the cursor and keeps it on the right! */
+        height: 310px; /* Locks the box permanently so the bottom paragraph never bounces */
+        padding-top: 40px; /* Pushes the text down from the top so it visually looks centered */
+    }
+    }
+
+    
+
+}
+
+
+/* =========================================
+   INFINITE SCROLLING GALLERY
+   ========================================= */
+.scrolling-gallery {
+    width: 100%;
+    overflow: hidden;
+    /* Removed the black background and olive borders to make it completely transparent! */
+    background: transparent; 
+    /* Increased the padding slightly so the enlarged photos don't get cut off at the top/bottom */
+    padding: 3rem 0; 
+    margin: 2rem 0;
+}
+
+.gallery-track {
+    display: flex;
+    width: max-content;
+    /* Slowed down to 40s to make it a bit more elegant, adjust if you want it faster! */
+    animation: scrollGallery 40s linear infinite; 
+}
+
+.gallery-track img {
+    height: 250px;
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    object-fit: cover;
+    
+    /* We swapped 'gap' for 'margin-right' to perfectly fix the math of the seamless loop */
+    margin-right: 20px; 
+    
+    /* The magic that makes it smoothly enlarge */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* THE NEW HOVER EFFECT */
+.gallery-track img:hover {
+    transform: scale(1.15); /* Magnifies the photo by 15% */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.9); /* Deepens the shadow so it floats off the page */
+    z-index: 10;
+    position: relative;
+}
+
+/* Pro-touch: the scrolling pauses if they hover their mouse over a photo! */
+.gallery-track:hover {
+    animation-play-state: paused; 
+}
+
+@keyframes scrollGallery {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
