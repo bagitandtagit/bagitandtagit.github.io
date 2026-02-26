@@ -134,16 +134,20 @@
 
     <section id="contact" class="contact reveal">
         <h2>Get a Free Custom Quote</h2>
-        <form id="contactForm" name="Quote Request" method="POST" data-netlify="true" action="/success.html">
-            <input type="text" name="Client Name" id="name" placeholder="Your Name or Organization" required>
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
             
+            <input type="hidden" name="access_key" value="e54bbec2-7778-4507-b5a0-20a207670fd4">
+            
+            <input type="hidden" name="redirect" value="https://bagitandtagit.github.io/success.html">
+            
+            <input type="text" name="Client Name" id="name" placeholder="Your Name or Organization" required>
             <input type="email" name="Email Address" id="email" placeholder="Email Address" required>
             <input type="tel" name="Phone Number" id="phone" placeholder="Phone Number (Optional)">
-            
             <input type="text" name="Event Name" id="eventName" placeholder="Event Name" required>
             <input type="text" name="Event Date and Time" id="eventDateTime" placeholder="Event Date(s) & Time" required>
-            <input type="text" name="Location" id="eventLocation" placeholder="Event Location" required>
+            <input type="text" name="Location" id="eventLocation" placeholder="Venue Name or Address" autocomplete="street-address" required>
             <input type="number" name="Attendance" id="attendance" placeholder="Estimated Attendance" required>
+            
             <button type="submit" class="btn">Send Request</button>
         </form>
     </section>
